@@ -10,7 +10,7 @@ const second = document.getElementById("second");
 const sendBtn = document.getElementById("send");
 const guest = document.querySelector("input[name=guest]");
 const attendances = document.querySelectorAll("input[name=attendance]");
-const previousDate = new Date('2025-04-20T00:00:00');
+const previousDate = new Date('2026-07-08T00:00:00');
 const guestValid = document.getElementById("guest-valid");
 
 const attendanceValid = document.getElementById("attendance-valid");
@@ -182,6 +182,6 @@ sendBtn.addEventListener("click", async (event) => {
         }
 
         sendBtn.classList.add("active")
-        document.getElementById("send-btn-text").innerText = "ОТПРАВЛЕНО"
+        document.getElementById("send-btn-text").innerText = "YUBORILDI"
     }
 });
