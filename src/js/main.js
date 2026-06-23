@@ -2,13 +2,10 @@ import '../css/styles.css';
 
 const audio = document.getElementById('audio');
 const muteBtn =  document.getElementById("mute");
-
 const day = document.getElementById("day");
 const hour = document.getElementById("hour");
 const minute = document.getElementById("minute");
 const second = document.getElementById("second");
-const sendBtn = document.getElementById("send");
-const guest = document.querySelector("input[name=guest]");
 const attendances = document.querySelectorAll("input[name=attendance]");
 const previousDate = new Date('2026-07-08T00:00:00');
 const guestValid = document.getElementById("guest-valid");
@@ -81,7 +78,6 @@ function handleScroll() {
     }
 
     lastScrollTop = scrollTop;
-
 }
 
 setInterval(timeCallback, 1000);
@@ -104,20 +100,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("visibilitychange", handleScroll)
 
     setTimeout(() => {
-        document.getElementById('spinner').remove()
+        document.getElementById('spinner').remove();
+        handleScroll()
     }, 1000);
-
-    guest.addEventListener("change", () => {
-        if(guest.value !== '' && guestValid.style.display === '') {
-            guestValid.style.display = "none";
-        }
-    });
-
-    guest.addEventListener("keydown", () => {
-        if(guestValid.style.display === '') {
-            guestValid.style.display = "none";
-        }
-    });
 
     attendances.forEach(attendance => {
         attendance.addEventListener("change", () => {
@@ -128,60 +113,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-
-
-// const handleIntersection = (entries, observer) => {
-//     for (const entry of entries) {
-//         entry.target.style.setProperty('--shown', entry.isIntersecting ? 1 : 0)
-//     }
-// }
-//
-// const observer = new IntersectionObserver((entries, observer) => {
-//     entries.forEach((entry) => {
-//         // console.log(entry.target);
-//     })
-// }, {
-//     root: null,
-//     rootMargin: '0px',
-//     threshold: 0.5
-// })
-
 muteBtn.addEventListener('click', toggleMute)
-
-// animations.forEach(animation => observer.observe(animation))
-
-sendBtn.addEventListener("click", async (event) => {
-    event.preventDefault();
-
-    if (guest.value === '') {
-        guestValid.style.display = "";
-    }
-    const attendance = document.querySelector("input[name=attendance]:checked");
-
-
-    if (attendance === null || attendance.value === '' || attendance.value === null) {
-        attendanceValid.style.display = "";
-    }
-
-    if (guest.value !== '' && attendance.value !== '') {
-
-        try {
-            const response = await fetch('/.netlify/functions/sendMessage', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    message: `*GuestName*: ${guest.value} \n*Attendance*: ${attendance.value}`
-                }),
-            });
-            const data = await response.json();
-            console.log(data);
-        } catch (error) {
-            console.error('Error:', error);
-        }
-
-        sendBtn.classList.add("active")
-        document.getElementById("send-btn-text").innerText = "YUBORILDI"
-    }
-});
